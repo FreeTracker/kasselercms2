@@ -129,14 +129,14 @@ function get_random_string($size=25, $string=""){
 * @param string $select
 * @return string
 */
-function get_lang_file($select="", $nosels=true){
+function get_lang_file($select="", $nosels=true, $class="select chzn-search-hide"){
 global $lang;
     if(hook_check(__FUNCTION__)) return hook();
     $sels = $nosels==true ? array('' => $lang['no']) : array();
     $dir = opendir('includes/language/');
     while(($file = readdir($dir))) if(is_dir('includes/language/'.$file) AND $file!='.' AND $file!='..' AND $file!='.svn') $sel[$file] = isset($lang[$file])?$lang[$file]:$file;
     closedir($dir);
-    return in_sels('language', array_merge($sels, $sel), 'select chzn-search-hide', isset($_POST['lang']) ? $_POST['lang'] :$select);
+    return in_sels('language', array_merge($sels, $sel), $class, isset($_POST['lang']) ? $_POST['lang'] :$select);
 }
 
 /**
@@ -161,13 +161,13 @@ global $lang;
 * @param string $tpl
 * @return string
 */
-function select_template($tpl=""){
+function select_template($tpl="", $class="select2 chzn-search-hide"){
 global $load_tpl, $lang;
     if(hook_check(__FUNCTION__)) return hook();
     $template_dir = opendir(TEMPLATE_PATH);
     while(($file = readdir($template_dir))) if(is_dir(TEMPLATE_PATH.$file) AND $file!='.' AND $file!='..' AND $file!='admin' AND $file!='pda' AND $file!='.svn') $sel[$file] = isset($lang[$file]) ? $lang[$file]:$file;
     closedir($template_dir);
-    return in_sels('template', $sel, 'select2 chzn-search-hide', !empty($tpl) ? $tpl : $load_tpl);
+    return in_sels('template', $sel, $class, !empty($tpl) ? $tpl : $load_tpl);
 }
 
 /**
